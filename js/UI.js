@@ -62,4 +62,24 @@ class UI {
     this.kermakers.addTo(this.mapa);
   }
 
+  //buscador
+  obtenerSugerencias(busqueda){
+    this.api.obtenerDatos()
+        .then(datos => {
+          //obtener los datos
+          const resultados = datos.respuestaJSON.results;
+
+          //enviar el JSON y la busqueda para el filtrado
+          this.filtrarSugerencias(resultados, busqueda);
+        })
+  }
+  //filtra las sugerencias en base al input
+  filtrarSugerencias(resultado, busqueda){
+    //filtrar con .filter
+    const filtro = resultado.filter(filtro => filtro.calle.indexOf(busqueda) !== -1); // aca recorremos todos los items y devolvemos todos los que coincidan con la busqueda, el -1 no existe en un array por lo que decir !== es que sea contrario a.
+
+    //mostrar los pines
+    this.mostrarPines(filtro);
+  }
+
 }
